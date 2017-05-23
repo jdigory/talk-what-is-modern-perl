@@ -1,0 +1,8 @@
+# What is Modern Perl?
+
+Given at The Perl Conference 2017 - Washington, D.C.
+
+* Visible on the web at: https://jlavin.endpoint.com/talks/what-is-modern-perl/
+* Markdown slides are in [present.mkd](present.mkd)
+* Clone repository, run `cpanm --install-deps .`, then `./serve`
+
