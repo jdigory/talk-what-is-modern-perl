@@ -10,9 +10,6 @@
   font-weight: normal;
   font-style: normal;
 }
-body {
-  background: #302E2F;
-}
 .reveal {
   font-family: MyriadPro, arial, sans-serif;
 }
@@ -23,21 +20,6 @@ body {
 }
 .reveal h1 {
   letter-spacing: -0.03em;
-}
-.reveal h1, .reveal h2 {
-  color: #de8427;
-}
-.reveal .contrast {
-  color: #fff;
-  text-shadow: 5px 5px 5px #b16a1f;
-}
-.reveal code {
-  background: #3F3F3F;
-  padding: .05em .15em;
-}
-
-.reveal pre {
-  width: 50%;
 }
 .reveal li pre {
   width: auto;

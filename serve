@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cat src/black.css src/mine.css > dist/css/ours.css 
+cat src/white.css src/mine.css > dist/css/ours.css
 
 revealup serve present.mkd --theme dist/css/ours.css --transition none --port 5005
