@@ -11,8 +11,8 @@
 <!-- .slide: data-background="dist/images/End_point_dark_on_light.svg" data-background-size="90%" -->
 
 Note: Josh Lavin. End Point Corp - web consultancy. Been using Perl for
-      15 years, but only in a modern way for the last 3 years. I still
-      have a lot to learn.
+      15 years, but only in what I would call a "modern" way for the
+      last 3 years. I still have a lot to learn.
 
 ---
 
@@ -92,15 +92,13 @@ Note: I asked some folks in the Perl community how they would succinctly
 
 ---
 
-## &ldquo;Modern Perl is code that achieves its goal cleanly, without using old practices that tend to cause more problems then they solve. 
-
-&hellip;
+## &ldquo;Modern Perl is code that achieves its goal cleanly, without using old practices that tend to cause more problems than they solve &hellip;
 
 Note: Chad Granum, author of Test2
 
 ---
 
-## &ldquo;Truly modern Perl code avoids the obviously-bad practices of the past, because history has shaped it.&rdquo;
+## &ldquo;&hellip;Truly modern Perl code avoids the obviously-bad practices of the past, because history has shaped it.&rdquo;
 
 <cite>&mdash; Chad Granum (EXODIST)</cite>
 
@@ -174,7 +172,7 @@ Note: varying schools of thought
 
 ## communicate your thoughts to yourself
 
-Note: https://zachholman.com/posts/documentation/
+[zachholman.com/posts/documentation](https://zachholman.com/posts/documentation/)
 
 ---
 
@@ -343,7 +341,7 @@ Note: the constructor for the class. Basic attribute there
 
 Note: Moose/Moo are "object systems". They make Perl 5 OOP easier,
       more consistent, and less tedious. Moo provides almost
-      two-thirds of Moose.
+      two-thirds of Moose (faster).
 
 ---
 
@@ -406,6 +404,8 @@ UserTag mailchimp Routine <<EOR
 sub {
     my ($thing1, $thing2, $opt) = @_;
     ...
+    # lotsa inline code
+    ...
     return $something;
 }
 EOR
@@ -444,7 +444,7 @@ use Dancer2;
 get '/mailchimp/*/**' => sub {
     my ($method, $opt) = splat;
     ...
-    # bunch of inline code here
+    # lotsa inline code
     ...
     return $something;
 };
@@ -498,22 +498,17 @@ Note: what if our database access could be done as an object?
 
 ---
 
-## Slides, notes
-
-[github.com/jdigory/talk-what-is-modern-perl](https://github.com/jdigory/talk-what-is-modern-perl)
+## Slides: [git.io/vHHOE](https://github.com/jdigory/talk-what-is-modern-perl)
 
 ## Resources
 
-Modern Perl, 4th edition
-by chromatic
-http://www.modernperlbooks.com/books/modern_perl_2016/
+[modernperlbooks.com/books/modern_perl_2016](http://www.modernperlbooks.com/books/modern_perl_2016/)
 
-https://speakerdeck.com/genehack/modern-perl-for-the-unfrozen-paleolithic-perl-programmer-1
+[speakerdeck.com/genehack/modern-perl-for-the-unfrozen-paleolithic-perl-programmer-1](https://speakerdeck.com/genehack/modern-perl-for-the-unfrozen-paleolithic-perl-programmer-1)
 
-https://engineering.semantics3.com/2016/06/15/a-perl-toolchain-for-building-micro-services-at-scale/
+[engineering.semantics3.com/2016/06/15/a-perl-toolchain-for-building-micro-services-at-scale](https://engineering.semantics3.com/2016/06/15/a-perl-toolchain-for-building-micro-services-at-scale/)
 
-https://speakerdeck.com/miccheng/modern-software-development-practices
+[speakerdeck.com/miccheng/modern-software-development-practices](https://speakerdeck.com/miccheng/modern-software-development-practices)
 
 Modern PBP Video series
 http://shop.oreilly.com/product/110000790.do
-https://www.safaribooksonline.com/library/view/modern-perl-best/9781491910719/
