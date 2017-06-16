@@ -4,7 +4,7 @@
 
 ### The Perl Conference 2017<br>Washington, DC
 
-[jlavin.endpoint.com/talks/what-is-modern-perl/](https://jlavin.endpoint.com/talks/what-is-modern-perl/)
+[jlavin.endpoint.com/talks/what-is-modern-perl](https://jlavin.endpoint.com/talks/what-is-modern-perl/)
 
 ---
 
@@ -27,7 +27,7 @@ Note: Josh Lavin. End Point Corp - web consultancy. Been using Perl for
 
 # How is &ldquo;Modern Perl&rdquo; defined?
 
-Note: or can it be?
+Note: or can it be? (What follows is my opinion)
 
 ---
 
@@ -42,7 +42,7 @@ Note: good ideas, but no
 # `use Modern::Perl;`
 # _?_
 
-Note: if you want to, but only a start
+Note: if you want to, but only a start. (Tell what this does)
 
 ---
 
@@ -108,8 +108,6 @@ Note: Chad Granum, author of Test2
 
 <cite>&mdash; Chad Granum (EXODIST)</cite>
 
-Note: &ldquo;For example, `/x` on a regex to split logical parts of the regex on independent lines.
-
 ---
 
 ## &ldquo;Writing Modern Perl means spending less time, less angst, and less effort in writing code that is correct, accurate, and easy to work and collaborate on.&rdquo;
@@ -152,6 +150,9 @@ Note: who doesn't want that?
 
 # Mindsets &amp; Toolsets
 
+Note: if on older version of Perl, not all applicable, but
+      principles apply.
+
 ---
 
 # Clean, maintainable code
@@ -166,13 +167,30 @@ Note: Balancing act of getting the job done _now_ vs doing the job _right_
 
 <!-- .slide: data-background="dist/images/psychopath.png" data-background-size="65%" -->
 
-Note: https://stackoverflow.com/questions/876089/who-wrote-this-programing-saying-always-code-as-if-the-guy-who-ends-up-maintai
+Note: You in 3 months.
+      https://stackoverflow.com/questions/876089/who-wrote-this-programing-saying-always-code-as-if-the-guy-who-ends-up-maintai
+
+---
+
+## not:
+
+<pre><code class="hljs perl">
+my $price = (
+    grep { defined } (
+        $sale_price, $our_price, $discount * $msrp
+    )
+) [0];
+</code></pre>
+
+Note: real example, line breaks mine. $price is getting array element
+      perhaps? Not really sure.
 
 ---
 
 # Documentation
 
-Note: varying schools of thought
+Note: varying schools of thought: docs could get outdated, "code is my
+      documentation", etc.
 
 ---
 
@@ -182,18 +200,65 @@ Note: varying schools of thought
 
 ---
 
+## Docs for users in POD
+public methods
+
+## Docs for maintainers in comments
+private methods
+
+Note: I like to document each method in POD as I go, rather than
+      at the end.
+
+---
+
+## maybe:
+
+```
+=item base_image_url
+
+The basic URL for an image, not signed.
+
+Requires asset_id.
+
+Extra parameters in hashref: size, bleed, type
+
+=cut
+
+sub base_image_url {
+    my ($asset_id, $opt) = @_;
+    ...
+}
+```
+(public)
+
+---
+
+## maybe:
+
+```
+sub _nonce {
+    # Uses microseconds like PHP's microtime(true)
+    return sprintf('%.6f', time);
+}
+```
+(private)
+
+---
+
 # Modular code
+
+Note: vs one big file or script
 
 ---
 
 ## Perl modules
 
-* logical separation <!-- .element: class="fragment" -->
-* API boundary <!-- .element: class="fragment" -->
-* code reuse <!-- .element: class="fragment" -->
+* logical separation
+* API boundary
+* code reuse
 
-Note: vs. one big script, or one big subroutine. Organize the code. What
-      should be accessible by callers, and what is private? Small subs.
+Note: Organize the code. What should be accessible by callers, and what
+      is private? Small subs.
 
 ---
 
@@ -212,10 +277,36 @@ Note: these are just guidelines from Damian -- customize to your liking.
 
 ---
 
+# `\x` regex modifier
+
+ignores whitespace
+
+Note: One recommendation from PBP, also Exodist: "For example, `/x` on a
+      regex to split logical parts of the regex on independent lines."
+      Easier to understand the regex.
+
+---
+
+## example
+
+```
+return unless $string =~ /\A
+  [A-Z0-9]          # must start with an alnum
+  (?:
+    [-A-Z0-9]*      # then maybe a dash or alnum
+    [A-Z0-9]        # finally ending with an alnum
+  )?                # lather, rinse, repeat
+\z/ix;
+```
+
+Note: from Email::Valid `_is_domain_label()`.
+
+---
+
 # `Perl::Critic`
 
 Note: Can critique your code. Most policies are based on PBP. Can be
-      very insightful.
+      very insightful. (a "linter" -- can be configured)
 
 ---
 
@@ -233,6 +324,9 @@ Useless interpolation of literal string at line 1, column 7.
    See page 51 of PBP. (Severity: 5)
 </pre>
 
+Note: you can customize these, if your organization doesn't care for
+      some. Can be difficult if running on existing code.
+
 ---
 
 ```
@@ -245,6 +339,23 @@ print 'test';
 
 source OK
 </pre>
+
+Note: Consider running at source code check-in.
+
+---
+
+# Aside: Git
+
+and other revision control systems
+
+Note: tracks changes to files. like in-place backup; almost a requisite
+      when collaborating; etc
+
+---
+
+# Pick one, and use it
+
+Note: Git is popular
 
 ---
 
@@ -303,8 +414,11 @@ Note: MetaCPAN has a lot cleaner interface, links to other services,
 
 <!-- .slide: data-background="dist/images/DuckDuckGo_Homepage.png" data-background-size="95%" -->
 
-<br>
-!cpan Module
+---
+
+# `!cpan Module`
+
+Note: DuckDuckGo "bang" command
 
 ---
 
@@ -314,36 +428,40 @@ https://cpanmin.us
 
 `cpanm Module`
 
+Note: Much less output than `cpan` command.
+
 ---
 
 # Object Oriented Programming
 
-Note: won't go into _why_ to use OOP; plenty of info online (& controversy)
+Note: for large systems, or when you know the code will become large.
+      Plenty of info online (& controversy)
 
 ---
 
 ## Old-school objects
 
-<pre><code class="hljs perl" data-noescape>
+<pre><code class="hljs perl">
 package Foo;
 use strict;
 use warnings;
 sub new {
     my $class = shift;
     my $opt = shift || {};
-    <span class="fragment">$opt->{ic_present} = $Vend::Cfg->{Database};</span>
+    $opt->{ic_present} = $Vend::Cfg->{Database};
     my $self = { %$opt };
     return bless $self, $class;
 }
 1;
 </code></pre>
 
-Note: the constructor for the class. Basic attribute there
+Note: the constructor for the class. Basic attribute there. This is
+      not wrong -- it may be what you need in your situation.
 
 ---
 
-<!-- .slide: data-background="dist/images/stephen-ellis-116721.jpg" -->
-<!-- photo by https://unsplash.com/@fstopusa -->
+<!-- .slide: data-background="dist/images/thomas-lefebvre-1518.jpg" -->
+<!-- photo by https://unsplash.com/@imthebear -->
 
 Note: Moose/Moo are "object systems". They make Perl 5 OOP easier,
       more consistent, and less tedious. Moo provides almost
@@ -353,18 +471,18 @@ Note: Moose/Moo are "object systems". They make Perl 5 OOP easier,
 
 ## `Moo(se)?` objects
 
-<pre><code data-noescape>
+<pre><code class="hljs perl">
 package Foo;
 use Moo;
-<span class="fragment">has ic_present => (
+has ic_present => (
     is => 'ro',
     default => sub { $Vend::Cfg->{Database} },
-);</span>
+);
 1;
 </code></pre>
 
 Note: strict and warnings for free. "new" constructor for free. There's
-      our attribute.
+      our attribute. Moo/Moose best for larger programs. 
 
 ---
 
@@ -609,3 +727,5 @@ Note: many more resources out there
 
 Modern PBP Video series
 http://shop.oreilly.com/product/110000790.do
+
+https://www.slideshare.net/RandalSchwartz/perl-best-practices-v4
