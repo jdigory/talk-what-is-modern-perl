@@ -52,7 +52,7 @@ Note: https://twitter.com/CarolynLowman72/status/798216949440409600
 
 ---
 
-<!-- .slide: data-background="dist/images/twitter-modern-perl-sriedel.png" data-background-size="59%" -->
+<!-- .slide: data-background="dist/images/twitter-modern-perl-sriedel.png" data-background-size="50%" -->
 
 Note: from the creator of Catalyst & Mojolicious
 
@@ -64,14 +64,21 @@ Note: Perl can be used beyond small, one-file scripts.
 
 ---
 
-<!-- .slide: data-background="dist/images/modern-perl-book-2002.jpg" data-background-size="45%" -->
+# Perl 6
+# _?_
+
+Note: maybe, but this talk is about Perl 5, because that is what I know.
+
+---
+
+<!-- .slide: data-background="dist/images/modern-perl-book-2002.jpg" data-background-size="40%" -->
 
 Note: the original "Modern Perl" book, circa 2002. I haven't read this,
       but probably outdated.
 
 ---
 
-<!-- .slide: data-background="dist/images/modern-perl-chromatic-2015.jpg" data-background-size="50%" -->
+<!-- .slide: data-background="dist/images/modern-perl-chromatic-2015.jpg" data-background-size="45%" -->
 
 Note: First published 2010, updated in 2015. A great resource. Available
       for free online, link at end of the presentation. I briefly touch
@@ -84,7 +91,8 @@ Note: First published 2010, updated in 2015. A great resource. Available
 
 <cite>&mdash; _Modern Perl_, chromatic</cite>
 
-Note: "It's an approach to writing great software with the Perl programming language."
+Note: "It's an approach to writing great software with the Perl
+      programming language."
 
 ---
 
@@ -139,7 +147,7 @@ Note: Modern Perl is how we can apply modern software development practices to P
 
 ## &ldquo;&hellip;using the newer tools will make a programmer more productive and a program easier to maintain.&rdquo;
 
-<cite>&mdash; Dave Cross<br>[josetteorama.com/what-is-modern-perl/](http://www.josetteorama.com/what-is-modern-perl/)</cite>
+<cite>&mdash; Dave Cross<br>[josetteorama.com/what-is-modern-perl](http://www.josetteorama.com/what-is-modern-perl/)</cite>
 
 Note: who doesn't want that?
 
@@ -149,6 +157,10 @@ Note: who doesn't want that?
 <!-- photo by https://unsplash.com/@asthetik -->
 
 # Mindsets &amp; Toolsets
+
+---
+
+# YMMV
 
 Note: if on older version of Perl, not all applicable, but
       principles apply.
@@ -165,14 +177,14 @@ Note: Balancing act of getting the job done _now_ vs doing the job _right_
 
 ---
 
-<!-- .slide: data-background="dist/images/psychopath.png" data-background-size="65%" -->
+<!-- .slide: data-background="dist/images/psychopath.png" data-background-size="60%" -->
 
 Note: You in 3 months.
       https://stackoverflow.com/questions/876089/who-wrote-this-programing-saying-always-code-as-if-the-guy-who-ends-up-maintai
 
 ---
 
-## not:
+## not this
 
 <pre><code class="hljs perl">
 my $price = (
@@ -211,7 +223,7 @@ Note: I like to document each method in POD as I go, rather than
 
 ---
 
-## maybe:
+## public:
 
 ```
 =item base_image_url
@@ -229,19 +241,17 @@ sub base_image_url {
     ...
 }
 ```
-(public)
 
 ---
 
-## maybe:
+## private:
 
 ```
 sub _nonce {
     # Uses microseconds like PHP's microtime(true)
-    return sprintf('%.6f', time);
+    return sprintf ('%.6f', time);
 }
 ```
-(private)
 
 ---
 
@@ -269,7 +279,7 @@ Note: guidelines for how your programmers in your organization should
 
 ---
 
-<!-- .slide: data-background="dist/images/pbp.jpg" data-background-size="50%" -->
+<!-- .slide: data-background="dist/images/pbp.jpg" data-background-size="45%" -->
 
 Note: these are just guidelines from Damian -- customize to your liking.
       A lot of great ideas. Also has a video series on _Modern Perl Best
@@ -277,7 +287,7 @@ Note: these are just guidelines from Damian -- customize to your liking.
 
 ---
 
-# `\x` regex modifier
+# `/x` regex modifier
 
 ignores whitespace
 
@@ -289,15 +299,17 @@ Note: One recommendation from PBP, also Exodist: "For example, `/x` on a
 
 ## example
 
-```
-return unless $string =~ /\A
+<pre><code class="hljs perl">
+$string =~ /\A[A-Z0-9](?:[-A-Z0-9]*[A-Z0-9])?\z/i;
+
+$string =~ /\A
   [A-Z0-9]          # must start with an alnum
   (?:
     [-A-Z0-9]*      # then maybe a dash or alnum
     [A-Z0-9]        # finally ending with an alnum
   )?                # lather, rinse, repeat
 \z/ix;
-```
+</code></pre>
 
 Note: from Email::Valid `_is_domain_label()`.
 
@@ -445,6 +457,7 @@ Note: for large systems, or when you know the code will become large.
 package Foo;
 use strict;
 use warnings;
+
 sub new {
     my $class = shift;
     my $opt = shift || {};
@@ -452,7 +465,6 @@ sub new {
     my $self = { %$opt };
     return bless $self, $class;
 }
-1;
 </code></pre>
 
 Note: the constructor for the class. Basic attribute there. This is
@@ -474,15 +486,16 @@ Note: Moose/Moo are "object systems". They make Perl 5 OOP easier,
 <pre><code class="hljs perl">
 package Foo;
 use Moo;
+
 has ic_present => (
     is => 'ro',
     default => sub { $Vend::Cfg->{Database} },
 );
-1;
 </code></pre>
 
 Note: strict and warnings for free. "new" constructor for free. There's
-      our attribute. Moo/Moose best for larger programs. 
+      our attribute. Moo/Moose best for larger programs. (note about auto-
+      vivification)
 
 ---
 
@@ -501,66 +514,21 @@ Note: all different. All build on Plack (which effectively replaces CGI
 
 ---
 
-<!-- .slide: data-background="dist/images/nordwood-themes-166423.jpg" -->
-<!-- photo by https://unsplash.com/@nordwood -->
+# Model
+# View
+# Controller
 
-# Testing
-# <br>
-
-Note: various kinds: unit, system, etc. Unit is usually the smallest
-      part of code you can test, such as the method in a class. System
-      is the whole system, which is usually something we do, whether we
-      call it that or not.
-
----
-
-# a personal story
-
-Note: I usually check to make sure my code works, before handing it over
-      to a client for review. So I've at least done that much. But never
-      did unit testing until about 3 years ago. Heard talks on unit
-      testing, Test Driven Development, thought, "I should do that."
+Note: these can help segregate your code into the "MVC model." This is a
+      way to separate areas of concern -- which part of the code is
+      responsible for extracting data from the database & where the
+      logic lives (model), vs the output of that data (view), vs
+      accepting input and commands (controllers). But even "modern
+      frameworks" such as Dancer and Catalyst are not perfect -- you can
+      put all your logic in a "route", for instance.
 
 ---
 
-```
-UserTag mailchimp Routine <<EOR
-sub {
-    my ($thing1, $thing2, $opt) = @_;
-    ...
-    # lotsa inline code
-    ...
-    return $something;
-}
-EOR
-```
-
-Note: problem was, with the application I use (Interchange), you call
-      custom code with a plugin called a UserTag. The app would call
-      this when you called the usertag in your template code. But you
-      can't unit-test this.
-
----
-
-```
-UserTag mailchimp Routine <<EOR
-use Ext::MailChimp3;
-sub {
-    my ($method, $opt) = @_;
-    my $mc = Ext::MailChimp3->new( ... );
-    return $mc->do( $method, $opt );
-}
-EOR
-```
-
-Note: so in this form, I move my Perl code to a real Perl module. Now I
-      can test the methods in Ext::MailChimp3. This is an old app, and
-      if you use newer frameworks, you don't have to mess with this, but
-      it shows that even with legacy software, you have few excuses.
-
----
-
-## You can do &ldquo;modern&rdquo; wrong
+## modern, but not
 
 ```
 use Dancer2;
@@ -574,6 +542,103 @@ get '/mailchimp/*/**' => sub {
 };
 ```
 
+Note: you could build an entire page to interact with MailChimp (email
+      newsletter service), all within a Dancer route, or a few routes.
+      While this could work, it isn't very easy to maintain, nor can
+      you really test it, aside from pointing and clicking. Which
+      brings us to...
+
+---
+
+<!-- .slide: data-background="dist/images/nordwood-themes-166423.jpg" -->
+<!-- photo by https://unsplash.com/@nordwood -->
+
+# Testing
+# <br>
+# <br>
+
+Note: We all "test" our work, in one way or another. A modern programmer
+      will prefer automated methods of testing.
+
+---
+
+# Unit
+# Integration
+# System
+# etc.
+
+Note: various kinds: unit, system, etc. Unit is usually the smallest
+      part of code you can test, such as the method in a class. System
+      is the whole system, which is usually something we do, whether we
+      call it that or not.
+
+---
+
+# WFM
+
+Note: I usually check to make sure my code works, before handing it over
+      to a client for review. So I've at least done that much. But never
+      did unit testing until about 3 years ago. Heard talks on unit
+      testing, Test Driven Development, thought, "I should do that."
+
+---
+
+## oh, I tested it alright
+
+```
+UserTag mailchimp Routine <<EOR
+sub {
+    my ($thing1, $thing2, $opt) = @_;
+    ...
+    # lotsa inline code
+    ...
+    return $something;
+}
+EOR
+```
+
+Note: The application I work with (Interchange); you call custom code
+      with a plugin called a UserTag. Basically, the code here in this
+      sub could be similar to code in a Dancer route. The app would call
+      this when you called the usertag in your template code. But you
+      can't unit-test this -- much like if you stuff all your logic in a
+      Dancer route, you can't unit-test that either.
+
+---
+
+## now we're talking
+
+```
+UserTag mailchimp Routine <<EOR
+use Ext::MailChimp3;
+sub {
+    my ($method, $opt) = @_;
+    my $mc = Ext::MailChimp3->new( ... );
+    return $mc->do( $method, $opt );
+}
+EOR
+```
+
+Note: so in this form, I move my Perl code to a real Perl module. Now I
+      can test the methods in Ext::MailChimp3.
+
+---
+
+## we can test this:
+
+<pre><code class="hljs perl">
+package Ext::MailChimp3;
+use Moo;
+
+sub do {
+    my ($self, $method, $opt) = @_;
+    ...
+}
+sub _whatever {
+    ...
+}
+</code></pre>
+
 ---
 
 # Testing tools
@@ -585,22 +650,67 @@ get '/mailchimp/*/**' => sub {
 
 ---
 
-<pre><code data-noescape>
+<pre><code class="hljs perl" data-noescape>
 use Test::More;
 use_ok('Vend::API::User');
-<span class="fragment">is(
+is(
     Vend::API::User::fetch(),
     undef,
     'no user'
-);</span>
+);
 done_testing();
 
 <span class="fragment">$ prove -l t/vend/api/user.t
-t/vend/api/user.t .. ok 
+t/vend/api/user.t .. ok
 All tests successful.</span>
 </code></pre>
 
-Note: what it looks like
+Note: what it looks like. "is" keyword, but others. Thing to do,
+      expected output, name of test. Different levels -- test inputs,
+      test absence of inputs. You can get more detailed as you go, catch
+      more things.
+
+---
+
+# existing code
+
+test, refactor, test
+
+Note: Tasked with adding or changing functionality. But you may need to
+      refactor someone's previous work (or your own). You don't want to
+      break existing functionality. So you can write a simple system
+      test, does this subroutine return the output I expect, right now?
+      Then refactor, test. Add your changes, test.
+
+---
+
+<pre><code class="hljs perl">
+use Test::More;
+use_ok('Existing::Module');
+
+is(
+    Existing::Module::sumthin( ... ),
+    $expected,
+    'existing func check'
+);
+</code></pre>
+
+---
+
+# TDD
+
+Note: Test Driven Development. Some folks use this. Write the test first
+      (it fails). Then write the code until the test passes. Can help
+      you flesh out the design of the program, before starting. "Am I
+      sanely doing things?"
+
+---
+
+## analysis paralysis
+
+just start somewhere
+
+Note: You don't have to figure it all out, to just get started.
 
 ---
 
@@ -625,24 +735,8 @@ get '/' => sub {
 };
 </code></pre>
 
-Note: I'm very much a DBIC beginner.
-
----
-
-<pre><code class="hljs perl">
-use Dancer2;
-use Dancer2::Plugin::Database;
-
-get '/' => sub {
-    return database->quick_lookup(
-        'content',
-        { id => 'index' },
-        'page_text'
-    );
-};
-</code></pre>
-
-Note: gets easier with convienence features of D2::P::D
+Note: I'm very much a DBIC beginner, but I experimented with taking an
+      existing app, and refactoring to use DBIC.
 
 ---
 
@@ -656,8 +750,13 @@ get '/' => sub {
 };
 </code></pre>
 
-Note: with DBIC. Similar, but DBIC gives us additional tooling. The
-      "rset" keyword is the ResultSet, keyword provided by the plugin.
+Note: with DBIC. The "rset" keyword is the ResultSet, keyword provided
+      by the plugin. DBIC makes our queries generally applicable to
+      various databases. It's not often that you will switch dbs, but
+      you may know MySQL, and be tasked with working on an app using
+      Postgres. If you don't know the differences, you have to learn
+      them. But if the app used DBIC, it makes it easier, in that sense.
+      Maybe your devs don't even have to know SQL at this point...
 
 ---
 
@@ -673,25 +772,12 @@ sub salary_less_than {
 }
 </code></pre>
 
----
-
-<pre><code class="hljs perl">
-sub category_listing {
-  my ($self, $category) = @_;
-  return $self->search(
-    { category => $category, archived => 0 },
-    {
-      select   => [
-        'id', { SUBSTRING => [qw/page_text 1 100/] }
-      ],
-      as       => [qw/ id title /],
-      order_by => { -desc => [qw/post_date id/] },
-    }
-  );
-}
-</code></pre>
-
-Note: many more resources out there
+Note: DBIC gives us additional tooling -- we can add this method to
+      extend the ResultSet, then our code can use
+      `salary_less_than()`. You have to be careful with DBIC if you
+      get to using advanced queries. You may want to debug so you know
+      what it's doing behind the scenes. It's a tool; wield carefully.
+      Many more resources out there.
 
 ---
 
@@ -707,6 +793,13 @@ Note: many more resources out there
 ## write great software
 ## new features, practices
 
+Note: I think these aspects of Modern Perl are especially important when
+      interacting with others. The larger your team, then the more you
+      want to take advantage of ways to increase colloboration -- to
+      make it easier to get work done, where you don't have to go back
+      and refactor code in 6 months. "Code is not for the computer, but
+      the human."
+
 ---
 
 # Questions?
@@ -715,17 +808,18 @@ Note: many more resources out there
 
 ## Slides: [git.io/vHHOE](https://github.com/jdigory/talk-what-is-modern-perl)
 
-## Resources
-
 [modernperlbooks.com/books/modern_perl_2016](http://www.modernperlbooks.com/books/modern_perl_2016/)
 
 [speakerdeck.com/genehack/modern-perl-for-the-unfrozen-paleolithic-perl-programmer-1](https://speakerdeck.com/genehack/modern-perl-for-the-unfrozen-paleolithic-perl-programmer-1)
 
 [engineering.semantics3.com/2016/06/15/a-perl-toolchain-for-building-micro-services-at-scale](https://engineering.semantics3.com/2016/06/15/a-perl-toolchain-for-building-micro-services-at-scale/)
 
+---
+
+## Slides: [git.io/vHHOE](https://github.com/jdigory/talk-what-is-modern-perl)
+
 [speakerdeck.com/miccheng/modern-software-development-practices](https://speakerdeck.com/miccheng/modern-software-development-practices)
 
-Modern PBP Video series
-http://shop.oreilly.com/product/110000790.do
+Modern PBP Video series: [shop.oreilly.com/product/110000790.do](http://shop.oreilly.com/product/110000790.do)
 
-https://www.slideshare.net/RandalSchwartz/perl-best-practices-v4
+[slideshare.net/RandalSchwartz/perl-best-practices-v4](https://www.slideshare.net/RandalSchwartz/perl-best-practices-v4)
